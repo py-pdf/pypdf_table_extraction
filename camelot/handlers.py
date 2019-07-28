@@ -36,7 +36,7 @@ class PDFHandler:
 
     """
 
-    def __init__(self, filepath: Union[StrByteType, Path], pages="1", password=None):
+    def __init__(self, filepath: Union[StrByteType, Path], pages="1", password=None, multi=[]):
         if is_url(filepath):
             filepath = download_url(filepath)
         self.filepath: Union[StrByteType, Path] = filepath
@@ -51,6 +51,7 @@ class PDFHandler:
             if sys.version_info[0] < 3:
                 self.password = self.password.encode("ascii")
         self.pages = self._get_pages(pages)
+        self.multi = multi
 
     def _get_pages(self, pages):
         """Converts pages string to list of ints.
@@ -188,6 +189,15 @@ class PDFHandler:
                 with mp.get_context("spawn").Pool(processes=cpu_count) as pool:
                     jobs = []
                     for p in self.pages:
+                        p_no = p
+
+                        page_kwargs = kwargs
+                        page_parser = parser
+
+                        if p_no in self.multi:
+                            page_kwargs.update(self.multi[p_no])
+                            page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
+
                         j = pool.apply_async(
                             self._parse_page,(p, tempdir, parser, suppress_stdout, layout_kwargs)
                         )
@@ -198,6 +208,15 @@ class PDFHandler:
                         tables.extend(t)
             else:
                 for p in self.pages:
+                    p_no = p
+
+                    page_kwargs = kwargs
+                    page_parser = parser
+
+                    if p_no in self.multi:
+                        page_kwargs.update(self.multi[p_no])
+                        page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
+
                     t = self._parse_page(p, tempdir, parser, suppress_stdout, layout_kwargs)
                     tables.extend(t)
 
@@ -224,7 +243,7 @@ class PDFHandler:
         -------
         tables : camelot.core.TableList
             List of tables found in PDF.
-        
+
         """
         self._save_page(self.filepath, page, tempdir)
         page_path = os.path.join(tempdir, f"page-{page}.pdf")
