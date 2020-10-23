@@ -34,6 +34,10 @@ class Lattice(BaseParser):
         in PDF coordinate space.
     process_background : bool, optional (default: False)
         Process background lines.
+    process_color_background : bool, optional (default: False)
+        Increase contrast for better background line processing.
+    saturation_threshold : int, optional (default: 15)
+        Increase the saturation for better colored background line processing.
     line_scale : int, optional (default: 15)
         Line size scaling factor. The larger the value the smaller
         the detected lines. Making it very large will lead to text
@@ -85,6 +89,8 @@ class Lattice(BaseParser):
         table_regions=None,
         table_areas=None,
         process_background=False,
+        process_color_background=False,
+        saturation_threshold=5,
         line_scale=15,
         copy_text=None,
         shift_text=None,
@@ -105,6 +111,8 @@ class Lattice(BaseParser):
         self.table_regions = table_regions
         self.table_areas = table_areas
         self.process_background = process_background
+        self.process_color_background = process_color_background
+        self.saturation_threshold = saturation_threshold
         self.line_scale = line_scale
         self.copy_text = copy_text
         self.shift_text = shift_text or ["l", "t"]
@@ -230,6 +238,8 @@ class Lattice(BaseParser):
         self.pdf_image, self.threshold = adaptive_threshold(
             self.image_path,
             process_background=self.process_background,
+            process_color_background=self.process_color_background,
+            saturation_threshold=self.saturation_threshold,
             blocksize=self.threshold_blocksize,
             c=self.threshold_constant,
         )

@@ -4,7 +4,14 @@ import cv2
 import numpy as np
 
 
-def adaptive_threshold(imagename, process_background=False, blocksize=15, c=-2):
+def adaptive_threshold(
+    imagename,
+    process_background=False,
+    blocksize=15,
+    c=-2,
+    process_color_background=False,
+    saturation_threshold=5,
+):
     """Thresholds an image using OpenCV's adaptiveThreshold.
 
     Parameters
@@ -13,18 +20,23 @@ def adaptive_threshold(imagename, process_background=False, blocksize=15, c=-2):
         Path to image file.
     process_background : bool, optional (default: False)
         Whether or not to process lines that are in background.
+    process_color_background : bool, optional (default: False)
+        Increase contrast for better background line processing.
+    saturation_threshold : int, optional (default: 15)
+        Increase the saturation for better colored background line processing.
     blocksize : int, optional (default: 15)
         Size of a pixel neighborhood that is used to calculate a
         threshold value for the pixel: 3, 5, 7, and so on.
 
         For more information, refer `OpenCV's adaptiveThreshold
-        <https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html#adaptivethreshold>`_.
+        <https://docs.opencv.org/4.10.0/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3>`_.
     c : int, optional (default: -2)
         Constant subtracted from the mean or weighted mean.
         Normally, it is positive but may be zero or negative as well.
 
         For more information, refer `OpenCV's adaptiveThreshold
-        <https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html#adaptivethreshold>`_.
+        <https://docs.opencv.org/4.10.0/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3>`_.
+
 
     Returns
     -------
@@ -35,10 +47,26 @@ def adaptive_threshold(imagename, process_background=False, blocksize=15, c=-2):
     """
     img = cv2.imread(imagename)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    if not process_background:
+    if process_color_background:
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        initial = hsv[:, :, 1]
+        hsv[initial > saturation_threshold, 0] = 0
+        hsv[initial > saturation_threshold, 1] = 255
+        hsv[initial > saturation_threshold, 2] = 0
+        hsv[initial <= saturation_threshold, 0] = 128
+        hsv[initial <= saturation_threshold, 1] = 0
+        hsv[initial <= saturation_threshold, 2] = 255
+        hsv[initial == 255, 1] = 0
+        gray = cv2.cvtColor(hsv, cv2.COLOR_BGR2GRAY)
+    elif not process_background:
         gray = np.invert(gray)
     threshold = cv2.adaptiveThreshold(
-        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, blocksize, c
+        gray,
+        255,
+        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+        cv2.THRESH_BINARY,
+        blocksize,
+        c,
     )
     return img, threshold
 
