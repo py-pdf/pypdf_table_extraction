@@ -141,3 +141,10 @@ def test_lattice_ghostscript_deprecation_warning(foo_pdf):
         with pytest.raises(DeprecationWarning) as e:
             camelot.read_pdf(foo_pdf)
             assert str(e.value) == ghostscript_deprecation_warning
+
+
+def test_content_type():
+    url="https://camelot-py.readthedocs.io/en/master/_static/csv/foo.csv"
+    message = "File format not supported"
+    with pytest.raises(NotImplementedError, match=message):
+        tables = camelot.read_pdf(url)
