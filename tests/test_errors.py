@@ -1,11 +1,12 @@
 import os
+import io
 import warnings
 
 import pytest
 
 import camelot
 from tests.conftest import skip_on_windows
-
+from camelot.utils import InvalidArguments
 
 def test_unknown_flavor(foo_pdf):
     message = "Unknown flavor specified." " Use either 'lattice' or 'stream'"
@@ -25,6 +26,21 @@ def test_unsupported_format(testdir):
     with pytest.raises(NotImplementedError, match=message):
         camelot.read_pdf(filename)
 
+def test_no_file_or_bytes(testdir):
+    message = "Either `filepath` or `file_bytes` is required"
+    with pytest.raises(InvalidArguments, match=message):
+        camelot.read_pdf()
+
+@skip_on_windows
+def test_no_filepath_or_name(testdir):
+    message = ('Either pass a `filepath`, or give the '
+               '`file_bytes` argument a name attribute')
+    filename = os.path.join(testdir, "foo.pdf")
+    file_bytes = io.BytesIO()
+    with open(filename, "rb") as f:
+        file_bytes.write(f.read())
+    with pytest.raises(InvalidArguments, match=message):
+        camelot.read_pdf(file_bytes=file_bytes)
 
 @skip_on_windows
 def test_no_tables_found_logs_suppressed(testdir):

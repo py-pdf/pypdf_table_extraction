@@ -1,3 +1,4 @@
+import io
 import os
 from pathlib import Path
 
@@ -188,3 +189,22 @@ def test_handler_with_pathlib(testdir):
     with open(filename, "rb") as f:
         handler = PDFHandler(f)
         assert handler._get_pages("1") == [1]
+
+@skip_on_windows
+def test_from_open(testdir):
+    filename = os.path.join(testdir, "foo.pdf")
+    with open(filename, "rb") as file_bytes:
+        tables = camelot.read_pdf(file_bytes=file_bytes)
+        assert repr(tables) == "<TableList n=1>"
+        assert repr(tables[0]) == "<Table shape=(7, 7)>"
+
+@skip_on_windows
+def test_from_bytes(testdir):
+    filename = os.path.join(testdir, "foo.pdf")
+    file_bytes = io.BytesIO()
+    file_bytes.name = filename
+    with open(filename, "rb") as f:
+        file_bytes.write(f.read())  # note that we didn't seek, done by PDFHandler
+    tables = camelot.read_pdf(file_bytes=file_bytes)
+    assert repr(tables) == "<TableList n=1>"
+    assert repr(tables[0]) == "<Table shape=(7, 7)>"
