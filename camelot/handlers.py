@@ -186,12 +186,13 @@ class PDFHandler:
             # when cpu_count is 1
             if parallel and len(self.pages) > 1 and cpu_count > 1:
                 with mp.get_context("spawn").Pool(processes=cpu_count) as pool:
-                    jobs = [
-                        pool.apply_async(
-                            self._parse_page,
-                            (p, tempdir, parser, suppress_stdout, layout_kwargs)
-                        ) for p in self.pages
-                    ]
+                    jobs = []
+                    for p in self.pages:
+                        j = pool.apply_async(
+                            self._parse_page,(p, tempdir, parser, suppress_stdout, layout_kwargs)
+                        )
+                        jobs.append(j)
+
                     for j in jobs:
                         t = j.get()
                         tables.extend(t)
@@ -199,6 +200,7 @@ class PDFHandler:
                 for p in self.pages:
                     t = self._parse_page(p, tempdir, parser, suppress_stdout, layout_kwargs)
                     tables.extend(t)
+
         return TableList(sorted(tables))
 
     def _parse_page(
