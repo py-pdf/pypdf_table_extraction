@@ -1,12 +1,16 @@
 import os
-import sys
 import shutil
 import subprocess
+import sys
 
-path = os.path.dirname(sys.executable) + os.pathsep + os.environ['PATH']
+from camelot.backends.base import ConversionBackend
 
-class PopplerBackend:
-    def convert(self, pdf_path, png_path):
+
+path = os.path.dirname(sys.executable) + os.pathsep + os.environ["PATH"]
+
+
+class PopplerBackend(ConversionBackend):
+    def convert(self, pdf_path: str, png_path: str, resolution: int = 300) -> None:
         pdftopng_executable = shutil.which("pdftopng", path=path)
         if pdftopng_executable is None:
             raise OSError(
@@ -20,4 +24,4 @@ class PopplerBackend:
                 " ".join(pdftopng_command), stderr=subprocess.STDOUT, shell=True
             )
         except subprocess.CalledProcessError as e:
-            raise ValueError(e.output)
+            raise ValueError(e.output) from e
