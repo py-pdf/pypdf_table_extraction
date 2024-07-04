@@ -376,6 +376,23 @@ class Table:
             "page": self.page,
         }
         return report
+    
+    @property
+    def get_bounding_box(self) -> Cell:
+        """Get Cell containing bounding box for entire table"""
+        bounding_box = self.cells[0][0]
+        for row in self.cells:
+            for cell in row:
+                if bounding_box.x1 > cell.x1: 
+                    bounding_box.x1 = cell.x1
+                if bounding_box.y1 > cell.y1:
+                    bounding_box.y1 =cell.y1
+                if bounding_box.x2 < cell.x2:
+                    bounding_box.x2 = cell.x2
+                if bounding_box.y2 < cell.y2:
+                    bounding_box.y2 = cell.y2
+
+        return bounding_box
 
     def set_all_edges(self):
         """Sets all table edges to True."""
