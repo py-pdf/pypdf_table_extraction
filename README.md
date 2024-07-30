@@ -1,21 +1,20 @@
 <p align="center">
-   <img src="https://raw.githubusercontent.com/camelot-dev/camelot/master/docs/_static/camelot.png" width="200">
+   <img src="https://raw.githubusercontent.com/py-pdf/pypdf_table_extraction/main/docs/_static/camelot.png" width="200">
 </p>
 
-# Camelot: PDF Table Extraction for Humans
+# pypdf-table-extraction (Camelot): PDF Table Extraction for Humans
 
-[![tests](https://github.com/camelot-dev/camelot/actions/workflows/tests.yml/badge.svg)](https://github.com/camelot-dev/camelot/actions/workflows/tests.yml) [![Documentation Status](https://readthedocs.org/projects/camelot-py/badge/?version=master)](https://camelot-py.readthedocs.io/en/master/)
-[![codecov.io](https://codecov.io/github/camelot-dev/camelot/badge.svg?branch=master&service=github)](https://codecov.io/github/camelot-dev/camelot?branch=master)
-[![image](https://img.shields.io/pypi/v/camelot-py.svg)](https://pypi.org/project/camelot-py/) [![image](https://img.shields.io/pypi/l/camelot-py.svg)](https://pypi.org/project/camelot-py/) [![image](https://img.shields.io/pypi/pyversions/camelot-py.svg)](https://pypi.org/project/camelot-py/) [![Gitter chat](https://badges.gitter.im/camelot-dev/Lobby.png)](https://gitter.im/camelot-dev/Lobby)
-[![image](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![tests](https://github.com/py-pdf/pypdf_table_extraction/actions/workflows/tests.yml/badge.svg)](https://github.com/py-pdf/pypdf_table_extraction/actions/workflows/tests.yml) [![Documentation Status](https://readthedocs.org/projects/pypdf-table-extraction/badge/?version=master)](https://pypdf-table-extraction.readthedocs.io/en/master/)
+[![codecov.io](https://codecov.io/github/py-pdf/pypdf_table_extraction/badge.svg?branch=master&service=github)](https://codecov.io/github/py-pdf/pypdf_table_extraction/?branch=master)
+[![image](https://img.shields.io/pypi/v/pypdf-table-extraction.svg)](https://pypi.org/project/pypdf-table-extraction/) [![image](https://img.shields.io/pypi/l/pypdf-table-extraction.svg)](https://pypi.org/project/pypdf-table-extraction/) [![image](https://img.shields.io/pypi/pyversions/pypdf-table-extraction.svg)](https://pypi.org/project/pypdf-table-extraction/)
 
-**Camelot** is a Python library that can help you extract tables from PDFs!
+**pypdf-table-extraction** Formerly known as Camelot is a Python library that can help you extract tables from PDFs!
 
-**Note:** You can also check out [Excalibur](https://github.com/camelot-dev/excalibur), the web interface to Camelot!
+**Note:** You can also check out [Excalibur](https://github.com/camelot-dev/excalibur), the web interface to pypdf-table-extraction (Camelot)!
 
 ---
 
-**Here's how you can extract tables from PDFs.** You can check out the PDF used in this example [here](https://github.com/camelot-dev/camelot/blob/master/docs/_static/pdf/foo.pdf).
+**Here's how you can extract tables from PDFs.** You can check out the PDF used in this example [here](https://github.com/py-pdf/pypdf_table_extraction/blob/master/docs/_static/pdf/foo.pdf).
 
 ```python3
 >>> import camelot
@@ -49,7 +48,7 @@ Camelot also comes packaged with a [command-line interface](https://camelot-py.r
 
 Refer to the [QuickStart Guide](https://github.com/py-pdf/pypdf_table_extraction/blob/main/docs/user/quickstart.rst#quickstart) to quickly get started with Camelot, extract tables from PDFs and explore some basic options.
 
-**Note:** Camelot only works with text-based PDFs and not scanned documents. (As Tabula [explains](https://github.com/tabulapdf/tabula#why-tabula), "If you can click and drag to select text in your table in a PDF viewer, then your PDF is text-based".)
+**Note:** pypdf-table-extraction only works with text-based PDFs and not scanned documents. (As Tabula [explains](https://github.com/tabulapdf/tabula#why-tabula), "If you can click and drag to select text in your table in a PDF viewer, then your PDF is text-based".)
 
 You can check out some frequently asked questions [here](https://camelot-py.readthedocs.io/en/master/user/faq.html).
 
@@ -59,20 +58,17 @@ You can check out some frequently asked questions [here](https://camelot-py.read
 - **Metrics**: You can discard bad tables based on metrics like accuracy and whitespace, without having to manually look at each table.
 - **Output**: Each table is extracted into a **pandas DataFrame**, which seamlessly integrates into [ETL and data analysis workflows](https://gist.github.com/vinayak-mehta/e5949f7c2410a0e12f25d3682dc9e873). You can also export tables to multiple formats, which include CSV, JSON, Excel, HTML, Markdown, and Sqlite.
 
-See [comparison with similar libraries and tools](https://github.com/camelot-dev/camelot/wiki/Comparison-with-other-PDF-Table-Extraction-libraries-and-tools).
-
-## Support the development
-
-If Camelot has helped you, please consider supporting its development with a one-time or monthly donation [on OpenCollective](https://opencollective.com/camelot).
+See [comparison with similar libraries and tools](https://github.com/py-pdf/pypdf_table_extraction/wiki/Comparison-with-other-PDF-Table-Extraction-libraries-and-tools).
 
 ## Installation
 
 ### Using conda
 
-The easiest way to install Camelot is with [conda](https://conda.io/docs/), which is a package manager and environment management system for the [Anaconda](http://docs.continuum.io/anaconda/) distribution.
+The easiest way to install pypdf-table-extraction is with [conda](https://conda.io/docs/), which is a package manager and environment management system for the [Anaconda](http://docs.continuum.io/anaconda/) distribution.
+
 
 ```bash
-conda install -c conda-forge camelot-py
+conda install -c conda-forge pypdf-table-extraction
 ```
 
 ### Using pip
@@ -80,7 +76,7 @@ conda install -c conda-forge camelot-py
 After [installing the dependencies](https://camelot-py.readthedocs.io/en/master/user/install-deps.html) ([tk](https://packages.ubuntu.com/bionic/python/python-tk) and [ghostscript](https://www.ghostscript.com/)), you can also just use pip to install Camelot:
 
 ```bash
-pip install camelot-py[base]
+pip install pypdf-table-extraction[base]
 ```
 
 ### From the source code
@@ -88,7 +84,7 @@ pip install camelot-py[base]
 After [installing the dependencies](https://camelot-py.readthedocs.io/en/master/user/install.html#using-pip), clone the repo using:
 
 ```bash
-git clone  https://www.github.com/camelot-dev/camelot
+git clone  https://github.com/py-pdf/pypdf_table_extraction.git
 ```
 
 and install Camelot using pip:
@@ -116,8 +112,8 @@ The [Contributor's Guide](https://camelot-py.readthedocs.io/en/master/dev/contri
 
 ## Versioning
 
-Camelot uses [Semantic Versioning](https://semver.org/). For the available versions, see the tags on this repository. For the changelog, you can check out [HISTORY.md](https://github.com/camelot-dev/camelot/blob/master/HISTORY.md).
+Camelot uses [Semantic Versioning](https://semver.org/). For the available versions, see the tags on this repository. For the changelog, you can check out [HISTORY.md](https://github.com/py-pdf/pypdf_table_extraction/blob/master/HISTORY.md).
 
 ## License
 
-This project is licensed under the MIT License, see the [LICENSE](https://github.com/camelot-dev/camelot/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License, see the [LICENSE](https://github.com/py-pdf/pypdf_table_extraction/blob/master/LICENSE) file for details.
