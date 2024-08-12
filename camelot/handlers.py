@@ -189,12 +189,11 @@ class PDFHandler:
                 with mp.get_context("spawn").Pool(processes=cpu_count) as pool:
                     jobs = []
                     for p in self.pages:
-                        p_no = p
 
                         page_kwargs = kwargs
                         page_parser = parser
 
-                        if p_no in self.multi:
+                        if p in self.multi:
                             page_kwargs.update(self.multi[p_no])
                             page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
 
@@ -208,12 +207,12 @@ class PDFHandler:
                         tables.extend(t)
             else:
                 for p in self.pages:
-                    p_no = p
+                    # p_no = p
 
                     page_kwargs = kwargs
                     page_parser = parser
 
-                    if p_no in self.multi:
+                    if p in self.multi:
                         page_kwargs.update(self.multi[p_no])
                         page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
 
