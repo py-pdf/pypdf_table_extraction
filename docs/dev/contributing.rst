@@ -104,7 +104,7 @@ We recommend that your pull request complies with the following guidelines:
 
 .. _the seven rules of a great git commit message: https://chris.beams.io/posts/git-commit/
 
-- Please prefix your title of your pull request with [MRG] (Ready for Merge), if the contribution is complete and ready for a detailed review. An incomplete pull request's title should be prefixed with [WIP] (to indicate a work in progress), and changed to [MRG] when it's complete. A good `task list`_ in the PR description will ensure that other people get a fair idea of what it proposes to do, which will also increase collaboration.
+- Please create a draft pull request if it is a work in progress. An incomplete pull request's title could be prefixed with [WIP] (to indicate a work in progress). Change the status of your pull request if the contribution is complete and ready for a detailed review. A good `task list`_ in the PR description will ensure that other people get a fair idea of what it proposes to do, which will also increase collaboration.
 
 .. _task list: https://blog.github.com/2013-01-09-task-lists-in-gfm-issues-pulls-comments/
 
