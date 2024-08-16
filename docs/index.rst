@@ -40,7 +40,7 @@ Release v\ |version|. (:ref:`Installation <install>`)
 
 .. _here: _static/pdf/foo.pdf
 
-::
+:: pycon
 
     >>> import camelot
     >>> tables = camelot.read_pdf('foo.pdf')
