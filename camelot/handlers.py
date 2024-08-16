@@ -18,6 +18,7 @@ from .utils import get_rotation
 from .utils import get_text_objects
 from .utils import is_url
 
+import warnings
 
 class PDFHandler:
     """Handles all operations like temp directory creation, splitting
@@ -36,7 +37,7 @@ class PDFHandler:
 
     """
 
-    def __init__(self, filepath: Union[StrByteType, Path], pages="1", password=None, multi=[]):
+    def __init__(self, filepath: Union[StrByteType, Path], pages="1", password=None, multi={}):
         if is_url(filepath):
             filepath = download_url(filepath)
         self.filepath: Union[StrByteType, Path] = filepath
@@ -188,17 +189,20 @@ class PDFHandler:
             if parallel and len(self.pages) > 1 and cpu_count > 1:
                 with mp.get_context("spawn").Pool(processes=cpu_count) as pool:
                     jobs = []
-                    for p in self.pages:
-
+                    for i, p in enumerate(self.pages, 1):
+                        p_no = str(i) # [start] # [-5]
                         page_kwargs = kwargs
                         page_parser = parser
-
-                        if p in self.multi:
+                        # assert p == 0
+                        # print("test")
+                        # warnings.warn(UserWarning("{}".format(p)))
+                        if p_no in self.multi:
+                            print(p + " is found in " + self.multi)
                             page_kwargs.update(self.multi[p_no])
                             page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
 
                         j = pool.apply_async(
-                            self._parse_page,(p, tempdir, parser, suppress_stdout, layout_kwargs)
+                            self._parse_page,(p, tempdir, page_parser, suppress_stdout, layout_kwargs)
                         )
                         jobs.append(j)
 
@@ -206,17 +210,18 @@ class PDFHandler:
                         t = j.get()
                         tables.extend(t)
             else:
-                for p in self.pages:
-                    # p_no = p
+                for i, p in enumerate(self.pages, 1):
+                    p_no = str(i) # [start] # [-5]
 
                     page_kwargs = kwargs
                     page_parser = parser
 
-                    if p in self.multi:
+                    if p_no in self.multi:
+                        print(i,p) # debug
                         page_kwargs.update(self.multi[p_no])
                         page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
 
-                    t = self._parse_page(p, tempdir, parser, suppress_stdout, layout_kwargs)
+                    t = self._parse_page(p, tempdir, page_parser, suppress_stdout, layout_kwargs)
                     tables.extend(t)
 
         return TableList(sorted(tables))
