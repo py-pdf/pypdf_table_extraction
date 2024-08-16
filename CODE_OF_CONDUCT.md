@@ -1,6 +1,6 @@
 Be cordial or be on your way. --Kenneth Reitz
 
-https://www.kennethreitz.org/essays/2013/01/27/be-cordial-or-be-on-your-way
+https://kennethreitz.org/essays/2013/01/27/be-cordial-or-be-on-your-way
 
 # Contributor Covenant Code of Conduct
 
@@ -64,7 +64,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-https://github.com/camelot-dev/camelot/issues.
+https://github.com/py-pdf/pypdf_table_extraction/issues .
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the

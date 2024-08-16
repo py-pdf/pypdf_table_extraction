@@ -79,7 +79,10 @@ def download_url(url):
     """
     filename = f"{random_string(6)}.pdf"
     with tempfile.NamedTemporaryFile("wb", delete=False) as f:
-        headers = {"User-Agent": "Mozilla/5.0"}
+        headers = {
+            "User-Agent": "Mozilla/5.0",
+            "Accept-Encoding": "gzip;q=1.0, deflate;q=0.9, br;q=0.8, compress;q=0.7, *;q=0.1"
+        }
         request = Request(url, None, headers)
         obj = urlopen(request)
         content_type = obj.info().get_content_type()
@@ -622,6 +625,9 @@ def split_textline(
     cut_text = []
     bbox = textline.bbox
     try:
+        if textline.is_empty():
+            return [(-1, -1, textline.get_text())]
+
         if direction == "horizontal" and not textline.is_empty():
             x_overlap = [
                 i
@@ -652,7 +658,8 @@ def split_textline(
                         else:
                             # TODO: add test
                             if cut == x_cuts[-1]:
-                                cut_text.append((r, cut[0] + 1, obj))
+                                new_idx = min(cut[0] + 1, len(table.cols) - 1)
+                                cut_text.append((r, new_idx, obj))
                     elif isinstance(obj, LTAnno):
                         cut_text.append((r, cut[0], obj))
         elif direction == "vertical" and not textline.is_empty():
@@ -685,7 +692,8 @@ def split_textline(
                         else:
                             # TODO: add test
                             if cut == y_cuts[-1]:
-                                cut_text.append((cut[0] - 1, c, obj))
+                                new_idx = max(cut[0] - 1, 0)
+                                cut_text.append((new_idx, c, obj))
                     elif isinstance(obj, LTAnno):
                         cut_text.append((cut[0], c, obj))
     except IndexError:
