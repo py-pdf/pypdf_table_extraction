@@ -36,7 +36,7 @@ class PDFHandler:
 
     """
 
-    def __init__(self, filepath: Union[StrByteType, Path], pages="1", password=None, multi=[]):
+    def __init__(self, filepath: Union[StrByteType, Path], pages="1", password=None, multi={}):
         if is_url(filepath):
             filepath = download_url(filepath)
         self.filepath: Union[StrByteType, Path] = filepath
@@ -189,7 +189,7 @@ class PDFHandler:
                 with mp.get_context("spawn").Pool(processes=cpu_count) as pool:
                     jobs = []
                     for p in self.pages:
-                        p_no = p
+                        p_no = str(p)
 
                         page_kwargs = kwargs
                         page_parser = parser
@@ -199,7 +199,7 @@ class PDFHandler:
                             page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
 
                         j = pool.apply_async(
-                            self._parse_page,(p, tempdir, parser, suppress_stdout, layout_kwargs)
+                            self._parse_page,(p, tempdir, page_parser, suppress_stdout, layout_kwargs)
                         )
                         jobs.append(j)
 
@@ -208,7 +208,7 @@ class PDFHandler:
                         tables.extend(t)
             else:
                 for p in self.pages:
-                    p_no = p
+                    p_no = str(p)
 
                     page_kwargs = kwargs
                     page_parser = parser
@@ -217,7 +217,7 @@ class PDFHandler:
                         page_kwargs.update(self.multi[p_no])
                         page_parser = Lattice(**page_kwargs) if flavor == 'lattice' else Stream(**page_kwargs)
 
-                    t = self._parse_page(p, tempdir, parser, suppress_stdout, layout_kwargs)
+                    t = self._parse_page(p, tempdir, page_parser, suppress_stdout, layout_kwargs)
                     tables.extend(t)
 
         return TableList(sorted(tables))

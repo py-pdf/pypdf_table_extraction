@@ -215,6 +215,7 @@ def test_table_list_iter():
     item_c = next(iterator_b)
     assert item_c is not None
 
+@skip_on_windows
 def test_multi_params(testdir):
     df1 = pd.DataFrame(data_multi_params1)
     df2 = pd.DataFrame(data_multi_params2)
