@@ -10,13 +10,13 @@ OS-specific instructions
 
 Ubuntu
 ^^^^^^
-::
+:: console
 
     $ apt install ghostscript python3-tk
 
 MacOS
 ^^^^^
-::
+:: console
 
     $ brew install ghostscript tcl-tk
 
@@ -35,13 +35,13 @@ For Ghostscript
 
 Open the Python REPL and run the following:
 
-For Ubuntu/MacOS::
+For Ubuntu/MacOS:: pycon
 
     >>> from ctypes.util import find_library
     >>> find_library("gs")
     "libgs.so.9"
 
-For Windows::
+For Windows:: pycon
 
     >>> import ctypes
     >>> from ctypes.util import find_library
@@ -55,7 +55,7 @@ If the output is empty, then it's possible that the Ghostscript library is not a
 For Tkinter
 ^^^^^^^^^^^
 
-Launch Python and then import Tkinter::
+Launch Python and then import Tkinter::  pycon
 
     >>> import tkinter
 

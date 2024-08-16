@@ -19,7 +19,7 @@ A simple workaround is to divide the extraction into chunks, and save extracted 
 
 For more details, check out this code snippet from `@anakin87 <https://github.com/anakin87>`_:
 
-::
+.. code-block:: python
 
     import camelot
 
@@ -59,6 +59,8 @@ How can I supply my own image conversion backend to Lattice?
 ------------------------------------------------------------
 
 When using the :ref:`Lattice <lattice>` flavor, you can supply your own :ref:`image conversion backend <image-conversion-backend>` by creating a class with a ``convert`` method as follows::
+
+.. code-block:: python
 
     >>> class ConversionBackend(object):
     >>>     def convert(pdf_path, png_path):

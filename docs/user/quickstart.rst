@@ -10,7 +10,7 @@ Read the PDF
 
 Reading a PDF to extract tables with Camelot is very simple.
 
-Begin by importing the Camelot module::
+Begin by importing the Camelot module:: pycon
 
     >>> import camelot
 
@@ -20,7 +20,7 @@ Now, let's try to read a PDF. (You can check out the PDF used in this example `h
 
 .. _here: ../_static/pdf/foo.pdf
 
-::
+:: pycon
 
     >>> tables = camelot.read_pdf('foo.pdf')
     >>> tables
@@ -30,14 +30,14 @@ Now, we have a :class:`TableList <camelot.core.TableList>` object called ``table
 
 We can access each table using its index. From the code snippet above, we can see that the ``tables`` object has only one table, since ``n=1``. Let's access the table using the index ``0`` and take a look at its ``shape``.
 
-::
+:: pycon
 
     >>> tables[0]
     <Table shape=(7, 7)>
 
 Let's print the parsing report.
 
-::
+:: pycon
 
     >>> print tables[0].parsing_report
     {
@@ -49,7 +49,7 @@ Let's print the parsing report.
 
 Woah! The accuracy is top-notch and there is less whitespace, which means the table was most likely extracted correctly. You can access the table as a pandas DataFrame by using the :class:`table <camelot.core.Table>` object's ``df`` property.
 
-::
+:: pycon
 
     >>> tables[0].df
 
@@ -58,7 +58,7 @@ Woah! The accuracy is top-notch and there is less whitespace, which means the ta
 
 Looks good! You can now export the table as a CSV file using its :meth:`to_csv() <camelot.core.Table.to_csv>` method. Alternatively you can use :meth:`to_json() <camelot.core.Table.to_json>`, :meth:`to_excel() <camelot.core.Table.to_excel>` :meth:`to_html() <camelot.core.Table.to_html>` :meth:`to_markdown() <camelot.core.Table.to_markdown>` or :meth:`to_sqlite() <camelot.core.Table.to_sqlite>` methods to export the table as JSON, Excel, HTML files or a sqlite database respectively.
 
-::
+:: pycon
 
     >>> tables[0].to_csv('foo.csv')
 
@@ -66,13 +66,13 @@ This will export the table as a CSV file at the path specified. In this case, it
 
 You can also export all tables at once, using the :class:`tables <camelot.core.TableList>` object's :meth:`export() <camelot.core.TableList.export>` method.
 
-::
+:: pycon
 
     >>> tables.export('foo.csv', f='csv')
 
 .. tip::
     Here's how you can do the same with the :ref:`command-line interface <cli>`.
-    ::
+    :: console
 
         $ camelot --format csv --output foo.csv lattice foo.pdf
 
@@ -93,7 +93,7 @@ By default, pypdf-table-extraction only uses the first page of the PDF to extrac
 
 .. tip::
     Here's how you can do the same with the :ref:`command-line interface <cli>`.
-    ::
+    :: console
 
         $ camelot --pages 1,2,3 lattice your.pdf
 
@@ -104,7 +104,7 @@ Extract tables in parallel
 
 pypdf-table-extraction supports extracting tables in parrallel using all the available CPU cores.
 
-::
+:: pycon
 
     >>> tables = camelot.read_pdf('foo.pdf', page='all', parallel=True)
     >>> tables
@@ -112,7 +112,7 @@ pypdf-table-extraction supports extracting tables in parrallel using all the ava
 
 .. tip::
     Here's how you can do the same with the :ref:`command-line interface <cli>`.
-    ::
+    :: console
     
         $ camelot --pages all --parallel lattice foo.pdf
 
@@ -124,7 +124,7 @@ Reading encrypted PDFs
 
 To extract tables from encrypted PDF files you must provide a password when calling :meth:`read_pdf() <camelot.read_pdf>`.
 
-::
+:: pycon
 
     >>> tables = camelot.read_pdf('foo.pdf', password='userpass')
     >>> tables
@@ -132,7 +132,7 @@ To extract tables from encrypted PDF files you must provide a password when call
 
 .. tip::
     Here's how you can do the same with the :ref:`command-line interface <cli>`.
-    ::
+    :: console
 
         $ camelot --password userpass lattice foo.pdf
 
@@ -140,7 +140,7 @@ pypdf-table-extraction supports PDFs with all encryption types supported by `pyp
 
 Further encryption support may be added in future, however in the meantime if your PDF files are using unsupported encryption algorithms you are advised to remove encryption before calling :meth:`read_pdf() <camelot.read_pdf>`. This can been successfully achieved with third-party tools such as `QPDF`_.
 
-::
+:: console
 
     $ qpdf --password=<PASSWORD> --decrypt input.pdf output.pdf
 
