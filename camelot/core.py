@@ -258,10 +258,6 @@ class Cell:
         Whether or not cell is bounded on the top.
     bottom : bool
         Whether or not cell is bounded on the bottom.
-    hspan : bool
-        Whether or not cell spans horizontally.
-    vspan : bool
-        Whether or not cell spans vertically.
     text : string
         Text assigned to cell.
 
@@ -280,8 +276,6 @@ class Cell:
         self.right = False
         self.top = False
         self.bottom = False
-        self.hspan = False
-        self.vspan = False
         self._text = ""
 
     def __repr__(self):
@@ -298,6 +292,16 @@ class Cell:
     @text.setter
     def text(self, t):
         self._text = "".join([self._text, t])
+
+    @property
+    def hspan(self) -> bool:
+        """Whether or not cell spans horizontally."""
+        return not self.left or not self.right
+
+    @property
+    def vspan(self) -> bool:
+        """Whether or not cell spans vertically."""
+        return not self.top or not self.bottom
 
     @property
     def bound(self):
@@ -527,18 +531,6 @@ class Table:
         for index, col in enumerate(self.cols):
             self.cells[0][index].top = True
             self.cells[len(self.rows) - 1][index].bottom = True
-        return self
-
-    def set_span(self):
-        """Sets a cell's hspan or vspan attribute to True depending
-        on whether the cell spans horizontally or vertically.
-        """
-        for row in self.cells:
-            for cell in row:
-                if not cell.left or not cell.right:
-                    cell.hspan = True
-                if not cell.top or not cell.bottom:
-                    cell.vspan = True
         return self
 
     def to_csv(self, path, **kwargs):

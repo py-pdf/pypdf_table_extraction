@@ -341,8 +341,6 @@ class Lattice(BaseParser):
         table = table.set_edges(v_s, h_s, joint_tol=self.joint_tol)
         # set table border edges to True
         table = table.set_border()
-        # set spanning cells to True
-        table = table.set_span()
 
         pos_errors = []
         # TODO: have a single list in place of two directional ones?
