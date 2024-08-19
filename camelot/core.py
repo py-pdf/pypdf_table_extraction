@@ -647,20 +647,21 @@ class Table:
 
         Returns
         -------
-        t : camelot.core.Table
+        table : camelot.core.Table
+
         """
         for f in copy_text:
             if f == "h":
                 for i in range(len(self.cells)):
                     for j in range(len(self.cells[i])):
                         if self.cells[i][j].text.strip() == "":
-                            if self.cells[i][j].hspan and not self.cells[i][j].left:
+                            if not self.cells[i][j].left:
                                 self.cells[i][j].text = self.cells[i][j - 1].text
             elif f == "v":
                 for i in range(len(self.cells)):
                     for j in range(len(self.cells[i])):
                         if self.cells[i][j].text.strip() == "":
-                            if self.cells[i][j].vspan and not self.cells[i][j].top:
+                            if not self.cells[i][j].top:
                                 self.cells[i][j].text = self.cells[i - 1][j].text
         return self
 

@@ -169,16 +169,16 @@ class Lattice(BaseParser):
         indices = []
         for r_idx, c_idx, text in idx:
             for d in shift_text:
-                if d == "l" and table.cells[r_idx][c_idx].hspan:
+                if d == "l":
                     while not table.cells[r_idx][c_idx].left:
                         c_idx -= 1
-                if d == "r" and table.cells[r_idx][c_idx].hspan:
+                elif d == "r":
                     while not table.cells[r_idx][c_idx].right:
                         c_idx += 1
-                if d == "t" and table.cells[r_idx][c_idx].vspan:
+                elif d == "t":
                     while not table.cells[r_idx][c_idx].top:
                         r_idx -= 1
-                if d == "b" and table.cells[r_idx][c_idx].vspan:
+                elif d == "b":
                     while not table.cells[r_idx][c_idx].bottom:
                         r_idx += 1
             indices.append((r_idx, c_idx, text))
