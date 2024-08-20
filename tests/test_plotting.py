@@ -12,14 +12,14 @@ from tests.conftest import skip_pdftopng
 def test_text_plot(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename)
-    return camelot.plot(tables[0], kind="text")
+    assert camelot.plot(tables[0], kind="text")
 
 
 @pytest.mark.mpl_image_compare(baseline_dir="files/baseline_plots", remove_text=True)
 def test_textedge_plot(testdir):
     filename = os.path.join(testdir, "tabula/12s0324.pdf")
     tables = camelot.read_pdf(filename, flavor="stream")
-    return camelot.plot(tables[0], kind="textedge")
+    assert camelot.plot(tables[0], kind="textedge")
 
 
 @skip_pdftopng
@@ -27,7 +27,7 @@ def test_textedge_plot(testdir):
 def test_lattice_contour_plot_poppler(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="poppler")
-    return camelot.plot(tables[0], kind="contour")
+    assert camelot.plot(tables[0], kind="contour")
 
 
 @skip_on_windows
@@ -35,14 +35,14 @@ def test_lattice_contour_plot_poppler(testdir):
 def test_lattice_contour_plot_ghostscript(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="ghostscript")
-    return camelot.plot(tables[0], kind="contour")
+    assert camelot.plot(tables[0], kind="contour")
 
 
 @pytest.mark.mpl_image_compare(baseline_dir="files/baseline_plots", remove_text=True)
 def test_stream_contour_plot(testdir):
     filename = os.path.join(testdir, "tabula/12s0324.pdf")
     tables = camelot.read_pdf(filename, flavor="stream")
-    return camelot.plot(tables[0], kind="contour")
+    assert camelot.plot(tables[0], kind="contour")
 
 
 @skip_pdftopng
@@ -50,7 +50,7 @@ def test_stream_contour_plot(testdir):
 def test_line_plot_poppler(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="poppler")
-    return camelot.plot(tables[0], kind="line")
+    assert camelot.plot(tables[0], kind="line")
 
 
 @skip_on_windows
@@ -58,7 +58,7 @@ def test_line_plot_poppler(testdir):
 def test_line_plot_ghostscript(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="ghostscript")
-    return camelot.plot(tables[0], kind="line")
+    assert camelot.plot(tables[0], kind="line")
 
 
 @skip_pdftopng
@@ -66,7 +66,7 @@ def test_line_plot_ghostscript(testdir):
 def test_joint_plot_poppler(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="poppler")
-    return camelot.plot(tables[0], kind="joint")
+    assert camelot.plot(tables[0], kind="joint")
 
 
 @skip_on_windows
@@ -74,7 +74,7 @@ def test_joint_plot_poppler(testdir):
 def test_joint_plot_ghostscript(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="ghostscript")
-    return camelot.plot(tables[0], kind="joint")
+    assert camelot.plot(tables[0], kind="joint")
 
 
 @skip_pdftopng
@@ -82,7 +82,7 @@ def test_joint_plot_ghostscript(testdir):
 def test_grid_plot_poppler(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="poppler")
-    return camelot.plot(tables[0], kind="grid")
+    assert camelot.plot(tables[0], kind="grid")
 
 
 @skip_on_windows
@@ -90,4 +90,4 @@ def test_grid_plot_poppler(testdir):
 def test_grid_plot_ghostscript(testdir):
     filename = os.path.join(testdir, "foo.pdf")
     tables = camelot.read_pdf(filename, backend="ghostscript")
-    return camelot.plot(tables[0], kind="grid")
+    assert camelot.plot(tables[0], kind="grid")
