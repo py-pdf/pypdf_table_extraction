@@ -17,6 +17,7 @@ def read_pdf(
     suppress_stdout=False,
     parallel=False,
     layout_kwargs=None,
+    multi = {},
     **kwargs
 ):
     """Read PDF and return extracted tables.
@@ -43,6 +44,9 @@ def read_pdf(
     layout_kwargs : dict, optional (default: {})
         A dict of `pdfminer.layout.LAParams
         <https://github.com/euske/pdfminer/blob/master/pdfminer/layout.py#L33>`_ kwargs.
+    multi: dict, optional(default: {})
+        A dict to enter parameters specific only for a page. Key: Page(str) to dict(defined params).
+        Parameters defined in multi overwrite kwargs for that page
     table_areas : list, optional (default: None)
         List of table area strings of the form x1,y1,x2,y2
         where (x1, y1) -> left-top and (x2, y2) -> right-bottom
@@ -120,7 +124,7 @@ def read_pdf(
             warnings.simplefilter("ignore")
 
         validate_input(kwargs, flavor=flavor)
-        p = PDFHandler(filepath, pages=pages, password=password)
+        p = PDFHandler(filepath, pages=pages, password=password, multi=multi)
         kwargs = remove_extra(kwargs, flavor=flavor)
         tables = p.parse(
             flavor=flavor,
