@@ -1,22 +1,24 @@
 import warnings
 from pathlib import Path
-from typing import Union
 
-from pypdf._utils import StrByteType
+from .handlers import PDFHandler, FilePathType
 
-from .handlers import PDFHandler
-from .utils import remove_extra
-from .utils import validate_input
+from .utils import (
+    InvalidArguments,
+    validate_input,
+    remove_extra,
+)
 
 
 def read_pdf(
-    filepath: Union[StrByteType, Path],
+    filepath: FilePathType = None,
     pages="1",
     password=None,
     flavor="lattice",
     suppress_stdout=False,
     parallel=False,
     layout_kwargs=None,
+    file_bytes=None,
     **kwargs
 ):
     """Read PDF and return extracted tables.
@@ -26,8 +28,8 @@ def read_pdf(
 
     Parameters
     ----------
-    filepath : str, Path, IO
-        Filepath or URL of the PDF file.
+    filepath : str | pathlib.Path, optional (default: None)
+        Filepath or URL of the PDF file. Required if file_bytes is not given
     pages : str, optional (default: '1')
         Comma-separated page numbers.
         Example: '1,3,4' or '1,4-end' or 'all'.
@@ -40,6 +42,8 @@ def read_pdf(
         Print all logs and warnings.
     parallel : bool, optional (default: False)
         Process pages in parallel using all available cpu cores.
+    file_bytes : io.IOBase, optional (default: None)
+        A file-like stream. Required if filepath is not given
     layout_kwargs : dict, optional (default: {})
         A dict of `pdfminer.layout.LAParams
         <https://github.com/euske/pdfminer/blob/master/pdfminer/layout.py#L33>`_ kwargs.
@@ -115,12 +119,15 @@ def read_pdf(
             "Unknown flavor specified." " Use either 'lattice' or 'stream'"
         )
 
+    if not filepath and not file_bytes:
+        raise InvalidArguments('Either `filepath` or `file_bytes` is required')
+
     with warnings.catch_warnings():
         if suppress_stdout:
             warnings.simplefilter("ignore")
 
         validate_input(kwargs, flavor=flavor)
-        p = PDFHandler(filepath, pages=pages, password=password)
+        p = PDFHandler(filepath, pages=pages, password=password, file_bytes=file_bytes)
         kwargs = remove_extra(kwargs, flavor=flavor)
         tables = p.parse(
             flavor=flavor,
