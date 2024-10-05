@@ -17,7 +17,7 @@ class PopplerBackend:
 
         try:
             subprocess.check_output(
-                " ".join(pdftopng_command), stderr=subprocess.STDOUT, shell=True
+                " ".join(pdftopng_command), stderr=subprocess.STDOUT, shell=False
             )
         except subprocess.CalledProcessError as e:
             raise ValueError(e.output)
