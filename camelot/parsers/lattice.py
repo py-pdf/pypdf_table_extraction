@@ -174,16 +174,16 @@ class Lattice(BaseParser):
         indices = []
         for r_idx, c_idx, text in idx:
             for d in shift_text:
-                if d == "l" and table.cells[r_idx][c_idx].hspan:
+                if d == "l":
                     while not table.cells[r_idx][c_idx].left:
                         c_idx -= 1
-                if d == "r" and table.cells[r_idx][c_idx].hspan:
+                elif d == "r":
                     while not table.cells[r_idx][c_idx].right:
                         c_idx += 1
-                if d == "t" and table.cells[r_idx][c_idx].vspan:
+                elif d == "t":
                     while not table.cells[r_idx][c_idx].top:
                         r_idx -= 1
-                if d == "b" and table.cells[r_idx][c_idx].vspan:
+                elif d == "b":
                     while not table.cells[r_idx][c_idx].bottom:
                         r_idx += 1
             indices.append((r_idx, c_idx, text))
@@ -212,13 +212,13 @@ class Lattice(BaseParser):
                 for i in range(len(table.cells)):
                     for j in range(len(table.cells[i])):
                         if table.cells[i][j].text.strip() == "":
-                            if table.cells[i][j].hspan and not table.cells[i][j].left:
+                            if not table.cells[i][j].left:
                                 table.cells[i][j].text = table.cells[i][j - 1].text
             elif f == "v":
                 for i in range(len(table.cells)):
                     for j in range(len(table.cells[i])):
                         if table.cells[i][j].text.strip() == "":
-                            if table.cells[i][j].vspan and not table.cells[i][j].top:
+                            if not table.cells[i][j].top:
                                 table.cells[i][j].text = table.cells[i - 1][j].text
         return table
 
@@ -334,8 +334,6 @@ class Lattice(BaseParser):
         table = table.set_edges(v_s, h_s, joint_tol=self.joint_tol)
         # set table border edges to True
         table = table.set_border()
-        # set spanning cells to True
-        table = table.set_span()
 
         pos_errors = []
         # TODO: have a single list in place of two directional ones?
