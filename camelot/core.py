@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import math
 import os
-import sqlite3
 import tempfile
 import zipfile
 from operator import itemgetter
@@ -774,6 +773,7 @@ class Table:
             Output filepath.
 
         """
+        import sqlite3
         kw = {"if_exists": "replace", "index": False}
         kw.update(kwargs)
         conn = sqlite3.connect(path)
