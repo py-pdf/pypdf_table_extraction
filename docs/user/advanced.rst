@@ -35,6 +35,19 @@ To process background lines, you can pass ``process_background=True``.
   :file: ../_static/csv/background_lines.csv
   :class: full-width
 
+If there's too little contrast between the table background color and the document background color, you can try the option ``process_color_background=True``.
+
+.. code-block:: pycon
+
+    >>> tables = camelot.read_pdf('background_lines.pdf', process_background=True, process_color_background=True)
+    >>> tables[1].df
+
+.. tip::
+    Here's how you can do the same with the :ref:`command-line interface <cli>`.
+    ::
+
+        $ camelot lattice --process_color_background background_lines.pdf
+
 Visual debugging
 ----------------
 
