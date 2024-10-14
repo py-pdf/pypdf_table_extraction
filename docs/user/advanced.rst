@@ -78,7 +78,6 @@ Let's plot all the text present on the table's PDF page.
         $ pypdf_table_extraction lattice -plot text foo.pdf
 
 .. figure:: ../_static/png/plot_text.png
-    :height: 674
     :width: 1366
     :scale: 50%
     :alt: A plot of all text on a PDF page
@@ -199,7 +198,6 @@ You can also visualize the textedges found on a page by specifying ``kind='texte
         $ pypdf_table_extraction stream -plot textedge foo.pdf
 
 .. figure:: ../_static/png/plot_textedge.png
-    :height: 674
     :width: 1366
     :scale: 50%
     :alt: A plot of relevant textedges on a PDF page
@@ -400,7 +398,6 @@ Let's see the table area that is detected by default.
         $ pypdf_table_extraction stream -plot contour edge_tol.pdf
 
 .. figure:: ../_static/png/edge_tol_1.png
-    :height: 674
     :width: 1366
     :scale: 50%
     :alt: Table area with default edge_tol
@@ -421,7 +418,6 @@ To improve the detected area, you can increase the ``edge_tol`` (default: 50) va
         $ pypdf_table_extraction stream -e 500 -plot contour edge_tol.pdf
 
 .. figure:: ../_static/png/edge_tol_2.png
-    :height: 674
     :width: 1366
     :scale: 50%
     :alt: Table area with custom edge_tol
