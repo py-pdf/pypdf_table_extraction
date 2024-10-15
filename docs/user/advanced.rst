@@ -644,10 +644,10 @@ To deal with such cases, you can tweak PDFMiner's `LAParams kwargs <https://gith
 
 .. _image-conversion-backend:
 
-Use alternate image conversion backends
----------------------------------------
+Use alternative image conversion backends
+-----------------------------------------
 
-When using the :ref:`Lattice <lattice>` flavor, pypdf_table_extraction uses ``ghostscript`` to convert PDF pages to images for line recognition. If you face installation issues with ``ghostscript``, you can use an alternate image conversion backend called ``poppler``. You can specify which image conversion backend you want to use with
+When using the :ref:`Lattice <lattice>` flavor, pypdf_table_extraction uses ``ghostscript`` to convert PDF pages to images for line recognition. If you face installation issues with ``ghostscript``, you can use an alternative image conversion backend called ``poppler``. You can specify which image conversion backend you want to use with
 
 .. code-block:: pycon
 
