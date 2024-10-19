@@ -366,10 +366,6 @@ class Cell:
         Whether or not cell is bounded on the top.
     bottom : bool
         Whether or not cell is bounded on the bottom.
-    hspan : bool
-        Whether or not cell spans horizontally.
-    vspan : bool
-        Whether or not cell spans vertically.
     text : string
         Text assigned to cell.
 
@@ -388,8 +384,6 @@ class Cell:
         self.right = False
         self.top = False
         self.bottom = False
-        self.hspan = False
-        self.vspan = False
         self._text = ""
 
     def __repr__(self):  # noqa D105
@@ -406,6 +400,16 @@ class Cell:
     @text.setter
     def text(self, t):  # noqa D105
         self._text = "".join([self._text, t])
+
+    @property
+    def hspan(self) -> bool:
+        """Whether or not cell spans horizontally."""
+        return not self.left or not self.right
+
+    @property
+    def vspan(self) -> bool:
+        """Whether or not cell spans vertically."""
+        return not self.top or not self.bottom
 
     @property
     def bound(self):
@@ -630,39 +634,6 @@ class Table:
             self.cells[len(self.rows) - 1][index].bottom = True
         return self
 
-    def set_span(self):
-        """Set a cell's hspan or vspan attribute.
-
-        Set the cell's hspan or vspan attribute to True depending
-        on whether the cell spans horizontally or vertically.
-        """
-        for row in self.cells:
-            for cell in row:
-                left = cell.left
-                right = cell.right
-                top = cell.top
-                bottom = cell.bottom
-                if cell.bound == 4:
-                    continue
-                elif cell.bound == 3:
-                    if not left and (right and top and bottom):
-                        cell.hspan = True
-                    elif not right and (left and top and bottom):
-                        cell.hspan = True
-                    elif not top and (left and right and bottom):
-                        cell.vspan = True
-                    elif not bottom and (left and right and top):
-                        cell.vspan = True
-                elif cell.bound == 2:
-                    if left and right and (not top and not bottom):
-                        cell.vspan = True
-                    elif top and bottom and (not left and not right):
-                        cell.hspan = True
-                elif cell.bound in [0, 1]:
-                    cell.vspan = True
-                    cell.hspan = True
-        return self
-
     def copy_spanning_text(self, copy_text=None):
         """Copies over text in empty spanning cells.
 
@@ -676,20 +647,21 @@ class Table:
 
         Returns
         -------
-        t : camelot.core.Table
+        table : camelot.core.Table
+
         """
         for f in copy_text:
             if f == "h":
                 for i in range(len(self.cells)):
                     for j in range(len(self.cells[i])):
                         if self.cells[i][j].text.strip() == "":
-                            if self.cells[i][j].hspan and not self.cells[i][j].left:
+                            if not self.cells[i][j].left:
                                 self.cells[i][j].text = self.cells[i][j - 1].text
             elif f == "v":
                 for i in range(len(self.cells)):
                     for j in range(len(self.cells[i])):
                         if self.cells[i][j].text.strip() == "":
-                            if self.cells[i][j].vspan and not self.cells[i][j].top:
+                            if not self.cells[i][j].top:
                                 self.cells[i][j].text = self.cells[i - 1][j].text
         return self
 
