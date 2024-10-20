@@ -130,6 +130,8 @@ common_kwargs = [
 text_kwargs = common_kwargs + ["columns", "edge_tol", "row_tol", "column_tol"]
 lattice_kwargs = common_kwargs + [
     "process_background",
+    "process_color_background",
+    "saturation_threshold",
     "line_scale",
     "copy_text",
     "shift_text",
