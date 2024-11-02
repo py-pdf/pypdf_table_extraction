@@ -42,3 +42,6 @@ Plotting
 --------
 
 .. autofunction:: camelot.plot
+
+.. autoclass:: camelot.plotting.PlotMethods
+   :inherited-members:
