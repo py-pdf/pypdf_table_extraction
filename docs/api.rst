@@ -37,3 +37,9 @@ Lower-Lower-Level Classes
    :inherited-members:
 
 .. autoclass:: camelot.core.Cell
+
+Plotting
+--------
+
+.. autoclass:: camelot.plotting.Plotmethods
+   :inherited-members:
