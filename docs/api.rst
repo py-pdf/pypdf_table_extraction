@@ -41,5 +41,4 @@ Lower-Lower-Level Classes
 Plotting
 --------
 
-.. autoclass:: camelot.plotting.Plotmethods
-   :inherited-members:
+.. autofunction:: camelot.plot
