@@ -1,4 +1,6 @@
 import os
+import sys
+from unittest import mock
 
 import pandas as pd
 from pandas.testing import assert_frame_equal
@@ -46,6 +48,22 @@ def test_lattice_table_regions(testdir):
 
     filename = os.path.join(testdir, "table_region.pdf")
     tables = camelot.read_pdf(filename, table_regions=["170,370,560,270"])
+    assert_frame_equal(df, tables[0].df)
+
+
+def test_lattice_table_regions_mock_pdfium(testdir):  # added this test for behaviour
+    # This test should fail, but it does not
+    df = pd.DataFrame(data_lattice_table_regions)
+
+    filename = os.path.join(testdir, "table_region.pdf")
+    with mock.patch.dict(sys.modules, {"pypdfium2": None}):
+        tables = camelot.read_pdf(
+            filename,
+            flavor="lattice",
+            backend="pdfium",
+            use_fallback=False,
+            table_regions=["170,370,560,270"],
+        )
     assert_frame_equal(df, tables[0].df)
 
 
