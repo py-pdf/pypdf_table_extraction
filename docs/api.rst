@@ -21,10 +21,10 @@ Lower-Level Classes
 .. autoclass:: pypdf_table_extraction.parsers.Lattice
    :inherited-members:
 
-.. autoclass:: camelot.parsers.Network
+.. autoclass:: pypdf_table_extraction.parsers.Network
    :inherited-members:
 
-.. autoclass:: camelot.parsers.Hybrid
+.. autoclass:: pypdf_table_extraction.parsers.Hybrid
    :inherited-members:
 
 Lower-Lower-Level Classes
