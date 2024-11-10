@@ -41,7 +41,7 @@ Lower-Lower-Level Classes
 Plotting
 --------
 
-.. autofunction:: camelot.plot
+.. autofunction:: pypdf_table_extraction.plot
 
-.. autoclass:: camelot.plotting.PlotMethods
+.. autoclass:: pypdf_table_extraction.plotting.PlotMethods
    :inherited-members:
